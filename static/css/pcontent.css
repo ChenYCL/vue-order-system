@@ -76,4 +76,21 @@
     margin-top: .8rem;
     margin-right: .5rem; }
 
+.back {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  background: #38332f;
+  width: 5rem;
+  height: 5rem;
+  line-height: 5rem;
+  text-align: center;
+  border-radius: 50%; }
+  .back .content i, .back .content text {
+    font-weight: 600; }
+  .back .content i {
+    color: white; }
+  .back .content .text {
+    color: white; }
+
 /*# sourceMappingURL=pcontent.css.map */
