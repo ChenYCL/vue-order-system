@@ -1,0 +1,115 @@
+.nav{
+  height: 4rem;
+  width: 100%;
+  background: blanchedalmond;
+  text-align: center;
+  line-height: 4rem;
+  .title{
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.content{
+  .shop_list{
+    display: block;
+    height: 10rem;
+    width: 100%;
+    border-bottom: .2px solid gainsboro;
+    margin-top: .5rem;
+    font-size: 0;
+    .left{
+      display: inline-block;
+      width: 30%;
+      height: 10rem;
+      box-sizing: border-box;
+      img{
+        width: 10rem;
+        height: 10rem;
+      }
+    }
+    .right{
+      display: inline-block;
+      width: 70%;
+      height: 10rem;
+      vertical-align: top;
+      &>div{
+        padding-left: .5rem;
+      }
+      .title_info{
+        height: 2rem;
+        div{
+          display: inline-block;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+        .title{
+
+        }
+        .price{
+          color: red;
+          float: right;
+          margin-right: 2rem;
+        }
+      }
+      .desc{
+        font-size: 1.4rem;
+        height: 5rem;
+        padding: 1rem 0.5rem;
+        box-sizing: border-box;
+      }
+      .sale_info{
+        height: 3rem;
+        line-height: 3rem;
+        div{
+          display: inline-block;
+          font-size: 1.4rem;
+
+        }
+        .sale{
+          font-size: 0;
+          span{
+            color: red;
+            font-size: 1.6rem;
+          }
+          .img_content{
+            float: right;
+            width: 3rem;
+            overflow: hidden;  // 配合filter属性隐藏元图形
+            .hot_pic{
+              display: inline-block;
+              position: relative;
+              top: .4rem;
+              width: 2rem;
+              height: 2rem;
+              border-right: 20px solid transparent;
+
+            }
+
+            .hot_pic{
+              left: 2rem;  // 原图形偏移
+              border-left: 2rem solid transparent;
+              -webkit-filter: drop-shadow(-3.5rem 0);
+              filter: drop-shadow(-3.5rem 0);  // 图偏移距离
+              color: red;
+            }
+          }
+
+        }
+        .add{
+          float: right;
+          margin-right: 2rem;
+          background: red;
+          height: 3rem;
+          width: 3rem;
+          text-align: center;
+          line-height: 3rem;
+          border-radius: 50%;
+          font-size: 2rem;
+          color: white;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
