@@ -75,7 +75,7 @@
           .img_content{
             float: right;
             width: 3rem;
-            overflow: hidden;  // 配合filter属性隐藏元图形
+            overflow: hidden;
             .hot_pic{
               display: inline-block;
               position: relative;
@@ -87,10 +87,10 @@
             }
 
             .hot_pic{
-              left: 2rem;  // 原图形偏移
+              left: 2rem;
               border-left: 2rem solid transparent;
               -webkit-filter: drop-shadow(-3.5rem 0);
-              filter: drop-shadow(-3.5rem 0);  // 图偏移距离
+              filter: drop-shadow(-3.5rem 0);
               color: red;
             }
           }
@@ -113,3 +113,4 @@
     }
   }
 }
+

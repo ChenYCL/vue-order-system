@@ -28,4 +28,61 @@ strong {
   height: 0;
   clear: both; }
 
+#footer_nav {
+  position: fixed;
+  bottom: .5rem;
+  left: .5rem;
+  color: #fff;
+  background: #8f8a8a;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  border-radius: 50%; }
+  #footer_nav img {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .4rem; }
+  #footer_nav p {
+    font-size: .8rem;
+    position: relative;
+    top: -0.3rem; }
+
+#footer_cart {
+  position: fixed;
+  bottom: .5rem;
+  right: .5rem;
+  color: #fff;
+  background: red;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  border-radius: 50%; }
+  #footer_cart img {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .4rem; }
+  #footer_cart P {
+    font-size: .8rem;
+    top: -0.3rem; }
+
+.footer_book {
+  position: fixed;
+  bottom: .5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: #8f8a8a;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  border-radius: 50%; }
+  .footer_book img {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .4rem; }
+  .footer_book p {
+    font-size: .8rem;
+    position: relative;
+    top: -0.3rem; }
+
 /*# sourceMappingURL=basic.css.map */

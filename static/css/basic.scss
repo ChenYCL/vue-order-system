@@ -34,3 +34,74 @@ strong {
   height: 0;
   clear: both;
 }
+
+
+#footer_nav{
+  position: fixed;
+  bottom:.5rem;
+  left: .5rem;
+  color: #fff;
+  background: rgb(143, 138, 138);
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  border-radius: 50%;
+  img{
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .4rem;
+  };
+  p{
+    font-size: .8rem;
+    position: relative;
+    top:-0.3rem;
+  }
+}
+
+#footer_cart{
+  position: fixed;
+  bottom:.5rem;
+  right: .5rem;
+  color:#fff;
+  background: red;
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  border-radius: 50%;
+  img{
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .4rem;
+  }
+  P{
+    font-size: .8rem;
+    top:-0.3rem;
+
+  }
+}
+
+// 菜单
+
+.footer_book{
+  position: fixed;
+  bottom:.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: rgb(143, 138, 138);
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  border-radius: 50%;
+  img{
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .4rem;
+  };
+  p{
+    font-size: .8rem;
+    position: relative;
+    top:-0.3rem;
+  }
+
+}
