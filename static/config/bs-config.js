@@ -5,7 +5,7 @@ module.exports = function(bs) {
         middleware: {
           // overrides the second middleware default with new settings
           1: require('connect-history-api-fallback')({
-            index: '/search.html',
+            index: '/cart.html',
             verbose: true
           })
         }
