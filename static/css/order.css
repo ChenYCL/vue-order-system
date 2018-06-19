@@ -1,0 +1,73 @@
+@charset "UTF-8";
+.order_content {
+  padding: 1rem; }
+  .order_content .order_info {
+    background: #fff;
+    border-radius: .5rem; }
+    .order_content .order_info .order_top {
+      display: flex; }
+      .order_content .order_info .order_top img {
+        width: 5.6rem;
+        height: 5.6rem; }
+      .order_content .order_info .order_top .order_info_right {
+        flex: 1;
+        padding-top: .5rem; }
+    .order_content .order_info h3 {
+      line-height: 2;
+      padding: .5rem; }
+      .order_content .order_info h3 .price {
+        font-size: 1.6rem;
+        color: red; }
+  .order_content .order_list {
+    background: #fff;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    border-radius: .5rem;
+    padding: 1rem;
+    margin-top: 1rem; }
+    .order_content .order_list h3 {
+      line-height: 2; }
+    .order_content .order_list ul li {
+      display: flex;
+      line-height: 2; }
+      .order_content .order_list ul li .title {
+        flex: 2; }
+      .order_content .order_list ul li .num {
+        flex: 1;
+        text-align: center; }
+      .order_content .order_list ul li .price {
+        flex: 1;
+        text-align: center; }
+
+/*付款的页面*/
+.order_pay {
+  background-color: #fff;
+  padding: .5rem;
+  border-radius: 2rem 0rem .5rem 0rem; }
+  .order_pay h3 {
+    padding: .5rem;
+    font-size: 2rem;
+    text-align: center; }
+  .order_pay .order_pay_detail {
+    display: flex;
+    font-size: 1.6rem;
+    justify-content: space-around;
+    border-bottom: 1px solid #eee; }
+  .order_pay .order_pay_info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.6rem;
+    line-height: 2; }
+    .order_pay .order_pay_info .price_list {
+      margin-left: 1rem; }
+      .order_pay .order_pay_info .price_list .price {
+        color: red; }
+    .order_pay .order_pay_info .pay_button {
+      margin-right: 1rem;
+      border: 1px solid red;
+      background-color: red;
+      color: white;
+      border-radius: .5rem;
+      padding: 0rem .5rem 0rem .5rem; }
+
+/*# sourceMappingURL=order.css.map */
