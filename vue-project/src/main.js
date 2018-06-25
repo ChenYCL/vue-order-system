@@ -3,6 +3,8 @@ import App from './App.vue'
 
 
 import VueRouter from 'vue-router';
+import axios from 'axios';
+Vue.prototype.$http = axios;
 
 Vue.use(VueRouter);
 

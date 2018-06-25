@@ -16,230 +16,31 @@
     </header>
     <aside id="left_cate" class="left_cate">
       <ul>
-        <li>精品美食</li>
-        <li>精品小面</li>
-        <li>饮料酒水</li>
-        <li>新品推荐</li>
-        <li>舌尖美食</li>
-        <li>厨师长推荐</li>
+        <li v-for="item in list">
+          {{item.title}}
+        </li>
       </ul>
       <div id="nav_cate" class="nav_cate">
         <img src="../assets/images/nav.png" alt="">
         <p>菜单</p>
       </div>
     </aside>
-    <div class="content">
+
+    <div class="content" v-for="item in list" >
       <div class="item">
-        <h3 class="item_cate">皮蛋瘦肉粥</h3>
-        <ul class="item_list">
-          <router-link to="/pcontent" tag="li">
+        <h3 class="item_cate">{{item.title}}</h3>
+        <ul class="item_list" >
+          <li v-for="k in item.list">
             <div class="inner">
-              <img class="item_img" src="../assets/images/1.jpeg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </router-link>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">家乡扣肉</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">主打鸡</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">酸辣土豆丝</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">家乡腊肉</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">长沙臭豆腐</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">主打鸡</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="item">
-        <h3 class="item_cate">皮蛋瘦肉粥</h3>
-        <ul class="item_list">
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/1.jpeg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">家乡扣肉</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">主打鸡</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">酸辣土豆丝</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">家乡腊肉</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">长沙臭豆腐</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">主打鸡</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="item">
-        <h3 class="item_cate">皮蛋瘦肉粥</h3>
-        <ul class="item_list">
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/1.jpeg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">家乡扣肉</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">主打鸡</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">酸辣土豆丝</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">家乡腊肉</p>
-
-              <p class="price">¥26</p>
-            </div>
-          </li>
-
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/2.jpeg"/>
-
-              <p class="title">长沙臭豆腐</p>
-
-              <p class="price">¥26</p>
-            </div>
-
-          </li>
-          <li>
-            <div class="inner">
-              <img class="item_img" src="../assets/images/3.jpeg"/>
-
-              <p class="title">主打鸡</p>
-
-              <p class="price">¥26</p>
+              <img class="item_img" :src="`${api}${k.img_url}`" alt="">
+              <p class="title">{{k.title}}</p>
+              <p class="price">{{k.price}}</p>
             </div>
           </li>
         </ul>
       </div>
     </div>
+
     <div class="bg" id="bg">
 
     </div>
@@ -251,11 +52,23 @@
 
 <script>
   import NavFooter from '../components/public/NavFooter.vue';
+  import Config from '../assets/model/config.js';
   export default {
     name: "Home",
-
+    created(){
+       this.getData();
+    },
+    data(){
+      return{
+        list: null,
+        api: Config.api
+      }
+    },
     components:{
       NavFooter
+    },
+    beforeMount(){
+      console.log(this.list);
     },
     methods:{
       asideDom(){
@@ -273,7 +86,20 @@
             bg.style.display = 'none';
           }
         }
+      },
+
+       async getData(){
+        try {
+          const response = await this.$http.get(this.api+'api/productlist');
+          let list = await response.data.result;
+          this.list = list;
+          console.log(this.list,list);
+        } catch (error) {
+          console.error(error);
+        }
       }
+
+
     },
     mounted() {
         this.asideDom();
@@ -326,11 +152,14 @@
         box-sizing: border-box;
         .inner {
           border-radius: .5rem;
-          overflow: hidden; // 图片遮不住，父容器设置overflow：hidden
+          overflow: hidden;
           background: #fff;
           width: 100%;
           img {
             width: 100%;
+            height: 9.3rem;
+            object-fit: cover;
+
           }
           p {
             padding: .2rem .5rem;
