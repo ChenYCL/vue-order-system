@@ -29,12 +29,14 @@
     <div class="content" v-for="item in list" >
       <div class="item">
         <h3 class="item_cate">{{item.title}}</h3>
-        <ul class="item_list" >
+        <ul class="item_list">
           <li v-for="k in item.list">
             <div class="inner">
-              <img class="item_img" :src="`${api}${k.img_url}`" alt="">
-              <p class="title">{{k.title}}</p>
-              <p class="price">{{k.price}}</p>
+              <router-link :to="`/pcontent?id=${k._id}`" :key="`${k._id}`">
+                <img class="item_img" :src="`${api}${k.img_url}`" alt="">
+                <p class="title">{{k.title}}</p>
+                <p class="price">{{k.price}}</p>
+              </router-link>
             </div>
           </li>
         </ul>
@@ -53,25 +55,26 @@
 <script>
   import NavFooter from '../components/public/NavFooter.vue';
   import Config from '../assets/model/config.js';
+
   export default {
     name: "Home",
-    created(){
-       this.getData();
+    created() {
+      this.getData();
     },
-    data(){
-      return{
+    data() {
+      return {
         list: null,
         api: Config.api
       }
     },
-    components:{
+    components: {
       NavFooter
     },
-    beforeMount(){
+    beforeMount() {
       console.log(this.list);
     },
-    methods:{
-      asideDom(){
+    methods: {
+      asideDom() {
         var nav_btn = document.querySelector('.nav_cate');
         var left_aside = document.querySelector('.left_cate');
         var bg = document.querySelector('#bg');
@@ -88,12 +91,12 @@
         }
       },
 
-       async getData(){
+      async getData() {
         try {
-          const response = await this.$http.get(this.api+'api/productlist');
+          const response = await this.$http.get(this.api + 'api/productlist');
           let list = await response.data.result;
           this.list = list;
-          console.log(this.list,list);
+          console.log(this.list, list);
         } catch (error) {
           console.error(error);
         }
@@ -102,7 +105,7 @@
 
     },
     mounted() {
-        this.asideDom();
+      this.asideDom();
     }
   }
 </script>
@@ -290,7 +293,7 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    background: rgba(0, 0, 0, 0.6);  /*正常模式下无幕布遮罩*/
+    background: rgba(0, 0, 0, 0.6); /*正常模式下无幕布遮罩*/
     .list {
       position: fixed;
       bottom: -15rem;

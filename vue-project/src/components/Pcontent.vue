@@ -10,25 +10,19 @@
     </router-link>
     <div class="p_content">
       <div class="p_info">
-        <img src="../assets/images/product.jpg"/>
-        <h2>小炒肉</h2>
-        <p class="price">22.00/份</p>
+        <img :src="`${api}${list.img_url}`"/>
+        <h2>{{list.title}}</h2>
+        <p class="price">{{list.price}}元/份</p>
       </div>
       <div class="p_detial">
         <h3>
           商品详情
         </h3>
         <div class="p_content">
-          <img src="../assets/images/product.jpg"/>
-          <br/>
-          <p>
-            韩国辣酱海鲜炒面,青椒炒牛肉,芦笋腰果炒虾仁,『家常料理』简单又好吃的辣炒起司年糕鸡排
-          </p>
+          <!--<img :src="`${api}${list.img_url}`"/>-->
+          <!--<br/>-->
+          <div v-html="list.content"></div>
 
-          <br/>
-          <p>
-            韩国辣酱海鲜炒面,青椒炒牛肉,芦笋腰果炒虾仁,『家常料理』简单又好吃的辣炒起司年糕鸡排
-          </p>
         </div>
       </div>
     </div>
@@ -56,8 +50,35 @@
 </template>
 
 <script>
+  import Config from '../assets/model/config.js';
+
   export default {
-    name: "Pcontent"
+    name: "Pcontent",
+    data(){
+      return{
+        api: Config.api,
+        list: null
+      }
+    },
+    mounted() {
+      /*    /component/:id
+          console.log(this.$route.params);*/
+      var id = this.$route.query.id;
+      this.getQueryData(id);
+    },
+    methods: {
+      async getQueryData(id) {
+        let api = this.api + 'api/productcontent?id=' + id
+        let res = await this.$http.get(api).then((json)=>{
+          return json.data.result;
+        },(err)=>{
+          console.log(err);
+        });
+        if(res){
+          this.list = res[0]
+        }
+      }
+    }
   }
 </script>
 
