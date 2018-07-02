@@ -4,66 +4,75 @@ import App from './App.vue'
 
 import VueRouter from 'vue-router';
 import axios from 'axios';
+
 Vue.prototype.$http = axios;
 
 Vue.use(VueRouter);
 
-import Start from './components/Start.vue';
-import Cart from './components/Cart.vue';
-import Home from './components/Home.vue';
-import Order from './components/Order.vue';
-import Pcontent from './components/Pcontent.vue';
-import Search from './components/Search.vue';
-import Hot from './components/Hot.vue';
-import OrderPay from './components/OrderPay.vue';
 
-var routes = [
+const routes = [
   {
     path: '/start',
-    component: Start,
-
+    name: 'start',
+    component: () => import('./components/Start.vue'),
+    meta: {title: '开始', icon: ''}
   },
   {
     path: '/order',
-    component: Order,
+    name: 'order',
+    component: () => import('./components/Order.vue'),
+    meta: {title: '订单', icon: ''}
 
   },
   {
     path: '/home',
-    component: Home,
+    name: 'home',
+    component: () => import('./components/Home.vue'),
+    meta: {title: '主页', icon: ''}
 
   },
   {
     path: '/cart',
-    component: Cart,
+    name: 'cart',
+    component: () => import('./components/Cart.vue'),
+    meta: {title: '购物车', icon: ''}
 
   },
   {
     path: '/hot',
-    component: Hot,
+    name: 'hot',
+    component: () => import('./components/Hot.vue'),
+    meta: {title: '热门', icon: ''}
 
   },
   {
     path: '/pcontent',
-    component: Pcontent,
-
+    name: 'pcontent',
+    component: () => import('./components/Pcontent.vue'),
+    meta: {title: '详情', icon: ''}
   },
   {
     path: '/search',
-    component: Search,
+    name: 'search',
+    component: () => import('./components/Search.vue'),
+    meta: {title: '搜索', icon: ''}
 
   },
   {
     path: '/orderpay',
-    component: OrderPay,
+    name: 'orderpay',
+    component: () => import('./components/OrderPay.vue'),
+    meta: {title: '付款', icon: ''}
 
   },
   {
     path: '*',
-    redirect: '/start',
+    name: '404',
+    component: () => import('./components/Start.vue'),
+    redirect: '/start'
+
   }
 ]
-
 var router = new VueRouter({
   routes
 })

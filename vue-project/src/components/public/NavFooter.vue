@@ -30,11 +30,13 @@
       </ul>
     </div>
 
-    <router-link to="/cart">
+    <router-link :cartNum="cartNum" to="/cart">
       <div id="footer_cart">
         <img src="../../assets/images/cart.png" alt="">
         <p>购物车</p>
+        <span class="num" v-text="num==null?0:num"></span>
       </div>
+
     </router-link>
   </div>
 </template>
@@ -44,8 +46,42 @@
     name: "NavFooter",
     data() {
       return {
-        flag: false
+        flag: false,
       }
+    },
+    created(){
+
+    },
+    props:['cartNum'],
+    // props:{
+    //   // 检测类型 + 其他验证
+    //   cartNum: {
+    //     type: Number|null,
+    //     default: 1,
+    //     required: true,
+    //     validator: function (value) {
+    //       if(value == null){
+    //         return 0
+    //       }else {
+    //         return value >= 1
+    //
+    //       }
+    //     }
+    //   }
+    //
+    // },
+    computed: {
+      num: {
+        get() {
+          return this.cartNum
+        },
+        set(newVal) {
+          this.$emit('update:cartNum', newVal)
+        }
+      }
+    },
+    mounted(){
+
     }
   }
 </script>
@@ -95,6 +131,17 @@
       font-size: .8rem;
       top: -0.3rem;
 
+    }
+    .num{
+      position: absolute;
+      top:-.5rem;
+      right: .5rem;
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      color: white;
+      background: red;
+      border-radius: 50%;
     }
   }
 

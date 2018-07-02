@@ -9,8 +9,8 @@
       </div>
     </router-link>
     <div class="p_content">
-      <div class="p_info">
-        <img :src="`${api}${list.img_url}`"/>
+      <div class="p_info" v-cloak>
+        <img v-cloak :src="img_url"/>
         <h2>{{list.title}}</h2>
         <p class="price">{{list.price}}元/份</p>
       </div>
@@ -33,16 +33,16 @@
       <div class="cart">
         <strong>数量:</strong>
         <div class="cart_num">
-          <div class="input_left">-</div>
+          <div class="input_left" @click="decNum()">-</div>
           <div class="input_center">
-            <input type="text" readonly="readonly" value="1" name="num" id="num"/>
+            <input type="text" readonly="readonly" v-model="num" name="num" id="num"/>
           </div>
-          <div class="input_right">+</div>
+          <div class="input_right" @click="addNum()">+</div>
         </div>
 
       </div>
       <router-link to="/home">
-        <button class="addcart">加入购物车</button>
+        <button class="addcart" @click="addCart()">加入购物车</button>
       </router-link>
     </footer>
 
@@ -57,27 +57,60 @@
     data(){
       return{
         api: Config.api,
-        list: null
+        list: {},
+        img_url: '',
+        num:1
       }
+    },
+    created(){
+      let id = this.$route.query.id;
+      this.getQueryData(id);
     },
     mounted() {
       /*    /component/:id
           console.log(this.$route.params);*/
-      var id = this.$route.query.id;
-      this.getQueryData(id);
     },
     methods: {
-      async getQueryData(id) {
-        let api = this.api + 'api/productcontent?id=' + id
-        let res = await this.$http.get(api).then((json)=>{
-          return json.data.result;
-        },(err)=>{
-          console.log(err);
-        });
-        if(res){
-          this.list = res[0]
+      async addCart(){
+        // 桌子号
+        let api = this.api+'api/addcart';
+        try {
+          var res = await this.$http.post(api,{
+            uid: 'a001',
+            title: this.list.title,
+            price: this.list.price,
+            num: this.num,
+            img_url: this.list.img_url,
+            product_id: this.list._id
+          });
+          if(res.body.success){
+            this.$router.push({name:'home',params:{cartNumAdd:this.num}})
+          }
+        }catch (e) {
+
         }
-      }
+      },
+      addNum(){
+        ++this.num;
+      },
+      decNum(){
+        if(this.num>1){
+          --this.num;
+        }
+      },
+      async getQueryData(id) {
+        try {
+          const response = await this.$http.get(`${this.api}api/productcontent?id=${id}`);
+          let list = await response.data.result;
+          this.list =  list[0];
+          this.img_url = this.api + list[0].img_url
+
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+
     }
   }
 </script>

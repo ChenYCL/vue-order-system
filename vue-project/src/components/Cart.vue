@@ -18,67 +18,29 @@
           <p>合计:<span class="price">￥58</span></p>
         </div>
       </div>
+      <!--菜单列表-->
       <div class="cart_list">
-        <ul>
+        <ul v-for="(item,key) in list" :key="key">
           <li class="item">
             <div class="left_food">
-              <img src="../assets/images/1.jpeg" alt="">
+              <img :src="`${api}${item.img_url}`" alt="">
               <div class="food_info">
-                <p>老干妈腊肉</p>
-                <p class="price">￥48</p>
+                <p>{{item.title}}</p>
+                <p class="price">{{item.price}}</p>
               </div>
             </div>
             <div class="cart_right">
               <div class="cart_p_num">
-                <div class="input_left">-</div>
+                <div class="input_left" @click="DecCartNum(item,key)">-</div>
                 <div class="input_center">
-                  <input type="text" readonly value="1" name="">
+                  <input type="text" readonly v-model="item.num" name="">
                 </div>
-                <div class="input_right">+</div>
+                <div class="input_right" @click="IncCartNum(item,key)">+</div>
               </div>
             </div>
           </li>
         </ul>
-        <ul>
-          <li class="item">
-            <div class="left_food">
-              <img src="../assets/images/1.jpeg" alt="">
-              <div class="food_info">
-                <p>老干妈腊肉</p>
-                <p class="price">￥48</p>
-              </div>
-            </div>
-            <div class="cart_right">
-              <div class="cart_p_num">
-                <div class="input_left">-</div>
-                <div class="input_center">
-                  <input type="text" readonly value="1" name="">
-                </div>
-                <div class="input_right">+</div>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li class="item">
-            <div class="left_food">
-              <img src="../assets/images/1.jpeg" alt="">
-              <div class="food_info">
-                <p>老干妈腊肉</p>
-                <p class="price">￥48</p>
-              </div>
-            </div>
-            <div class="cart_right">
-              <div class="cart_p_num">
-                <div class="input_left">-</div>
-                <div class="input_center">
-                  <input type="text" readonly value="1" name="">
-                </div>
-                <div class="input_right">+</div>
-              </div>
-            </div>
-          </li>
-        </ul>
+
       </div>
       <div class="hot_food">
         <!--热门列表-->
@@ -94,111 +56,12 @@
                 <p class="price">¥26</p>
               </div>
             </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
-            <li>
-              <div class="inner">
-                <img src="../assets/images/3.jpeg"/>
-
-                <p class="title">主打鸡</p>
-
-                <p class="price">¥26</p>
-              </div>
-            </li>
           </ul>
         </div>
       </div>
     </div>
     <!--导航相关-->
-    <nav-footer></nav-footer>
+    <NavFooter :cartNum="cartNum"></NavFooter>
 
     <div class=" footer_book">
       <img src="../assets/images/menu.png" alt="">
@@ -211,11 +74,81 @@
 
 <script>
   import NavFooter from '../components/public/NavFooter.vue';
-
+  import Config from '../assets/model/config.js';
   export default {
     name: "Cart",
+    data() {
+      return {
+        api: Config.api,
+        list: []
+
+      }
+    },
+    props:['cartNum'],
     components: {
       NavFooter
+    },
+    methods: {
+
+      async getCartData() {
+        try {
+          // 二维码
+          let api = this.api + 'api/cartlist?uid=a001';
+          let res = await this.$http.get(api)
+          this.list = res.data.result;
+          console.log(res)
+        }catch (e) {
+          console.log(e);
+        }
+
+      },
+      async IncCartNum(item,key) {
+        try {
+          // let res = await this.$http.get(api)
+          // this.list = res.data.result;
+          let product_id = item.product_id;
+          ++item.num;
+          let num =  item.num;
+
+
+          let api = this.api + 'api/decCart?uid=a001&product_id='+product_id+'&num='+num;
+          let res = await this.$http.get(api);
+          console.log(res);
+
+        }catch (e) {
+          console.log(e);
+        }
+
+      },
+      async DecCartNum(item,key) {
+        try {
+
+          // let res = await this.$http.get(api)
+          // this.list = res.data.result;
+          let product_id = item.product_id;
+          if(item.num==1){
+            // 删除当前这条数据
+            console.log(item,key);
+            this.list.splice(key,1);
+          }else {
+            --item.num;
+          }
+          let num =  item.num;
+          let api = this.api + 'api/incCart?uid=a001&product_id='+product_id+'&num='+num;
+          let res = await this.$http.get(api);
+          console.log(res);
+
+        }catch (e) {
+          console.log(e);
+        }
+
+      }
+    },
+    mounted() {
+      this.getCartData()
+    },
+    created() {
+
     }
   }
 </script>

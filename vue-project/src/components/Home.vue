@@ -16,7 +16,7 @@
     </header>
     <aside id="left_cate" class="left_cate">
       <ul>
-        <li v-for="item in list">
+        <li v-for="(item,key) in list" @click="changeList(key);asideDom()" :key="key">
           {{item.title}}
         </li>
       </ul>
@@ -26,7 +26,7 @@
       </div>
     </aside>
 
-    <div class="content" v-for="item in list" >
+    <div class="content" v-for="item in list">
       <div class="item">
         <h3 class="item_cate">{{item.title}}</h3>
         <ul class="item_list">
@@ -47,7 +47,7 @@
 
     </div>
 
-    <nav-footer></nav-footer>
+    <nav-footer :cartNum="cartNum"></nav-footer>
 
   </div>
 </template>
@@ -59,12 +59,16 @@
   export default {
     name: "Home",
     created() {
+      this.getCartCount();
+
       this.getData();
     },
+
     data() {
       return {
         list: null,
-        api: Config.api
+        api: Config.api,
+        cartNum: 1
       }
     },
     components: {
@@ -80,7 +84,6 @@
         var bg = document.querySelector('#bg');
         bg.onclick = nav_btn.onclick = function (e) {
           e.preventDefault();
-          console.log(1);
           if (left_aside.style.transform != 'translate(0px, 0px)') {
             left_aside.style.transform = 'translate(0,0)';
             bg.style.display = 'block';
@@ -90,13 +93,31 @@
           }
         }
       },
+      async getCartCount(id) {
+        try {
+          const response = await this.$http.get(`${this.api}api/cartCount?uid=a001`);
+          let list = response.data.result;
+          this.cartNum = list;
+          console.log(this.cartNum);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      changeList(key) {
+        let itemCateDom = document.querySelectorAll('.item_cate');
+        document.documentElement.scrollTop = itemCateDom[key].offsetTop;
+        var left_aside = document.querySelector('.left_cate');
+        var bg = document.querySelector('#bg');
+        left_aside.style.transform = 'translate(-100%,0)';
+        bg.style.display = 'none';
+      },
 
       async getData() {
         try {
           const response = await this.$http.get(this.api + 'api/productlist');
           let list = await response.data.result;
           this.list = list;
-          console.log(this.list, list);
         } catch (error) {
           console.error(error);
         }
@@ -106,6 +127,12 @@
     },
     mounted() {
       this.asideDom();
+      // this.$on('update:cartNum',(msg)=>{
+      //   console.log(msg);
+      // })
+      if(this.$route.params['cartNumAdd']){
+        this.cartNum += this.$route.params.cartNumAdd;
+      }
     }
   }
 </script>
@@ -158,6 +185,10 @@
           overflow: hidden;
           background: #fff;
           width: 100%;
+          a {
+            color: #666;
+            text-decoration: none;
+          }
           img {
             width: 100%;
             height: 9.3rem;
