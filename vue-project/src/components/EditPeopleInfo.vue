@@ -13,8 +13,14 @@
         </ul>
       </div>
 
-      <div class="start" @click.prevent.stop="sendDesk()">
-        <span>开始点菜</span>
+
+
+      <div class="confirm" @click.prevent.stop="sendDesk()">
+        <span>确定修改</span>
+      </div>
+
+      <div class="cancel" @click.prevent.stop="backCart()">
+        <span>取消</span>
       </div>
 
       <div class="mark_input">
@@ -48,7 +54,10 @@
         num:''
       }
     },
-    methods: {
+  methods: {
+      backCart(){
+        this.$route.push({name:'cart'});
+      },
       addChangeEvent(i) {
 
         for (let f = 0; f < 12; f++) {
@@ -59,6 +68,9 @@
       },
       addNeeds(name) {
         if(this.inputContent.includes(name)) return;
+        if(this.inputStr){
+          this.inputStr = '';
+        }
         this.inputContent.push(name);
         this.$refs.userNeeds.setAttribute('placeholder','')
       },
@@ -82,10 +94,19 @@
         }catch (e) {
 
         }
+      },
+    //  获取初始的修改传递过来的值，之后再回显
+      getEditInfo(){
+        var desk_num = this.$route.params.p_num;
+        var desk_mark = this.$route.params.p_mark;
+        var desk_id =  this.$route.params.p_id;
+        this.addChangeEvent(Number(desk_num));
+        this.inputStr = desk_mark;
       }
 
     },
     mounted() {
+      this.getEditInfo();
     }
   }
 </script>
@@ -158,8 +179,30 @@
     height: 6rem;
     background: red;
   }
+  .start_content .confirm {
+    position: fixed;
+    margin-left: -3rem;
+    border-radius: 50%;
+    bottom: 5rem;
+    left: 30%;
+    text-align: center;
+    width: 6rem;
+    height: 6rem;
+    background: lightgray;
+  }
+  .start_content .cancel {
+    position: fixed;
+    margin-left: -3rem;
+    border-radius: 50%;
+    bottom: 5rem;
+    text-align: center;
+    left: 63%;
+    width: 6rem;
+    height: 6rem;
+    background: lightgray;
+  }
 
-  .start_content .start span {
+  .start_content .confirm span,.start_content .cancel span {
     display: block;
     width: 3rem;
     margin: 0 auto;

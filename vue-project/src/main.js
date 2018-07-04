@@ -66,12 +66,20 @@ const routes = [
 
   },
   {
+    path: '/editpeopleinfo',
+    name: 'editpeopleinfo',
+    component: () => import('./components/EditPeopleInfo.vue'),
+    meta: {title: '修改点餐信息', icon: ''}
+
+  },
+  {
     path: '*',
     name: '404',
     component: () => import('./components/Start.vue'),
     redirect: '/start'
 
-  }
+  },
+
 ]
 var router = new VueRouter({
   routes

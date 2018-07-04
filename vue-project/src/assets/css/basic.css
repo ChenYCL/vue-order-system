@@ -83,6 +83,7 @@ strong {
   .footer_book p {
     font-size: .8rem;
     position: relative;
-    top: -0.3rem; }
+    top: -0.3rem;
+    color: white; }
 
 /*# sourceMappingURL=basic.css.map */

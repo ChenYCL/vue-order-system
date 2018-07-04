@@ -5,17 +5,17 @@
         <h2>购物车</h2>
         <div class="p_number">
           <div class="p_number_left">
-            <p>用餐人数:2人</p>
-            <p>备注:无</p>
+            <p>用餐人数:{{peopleInfoList.p_num}}人</p>
+            <p>备注:{{peopleInfoList.p_mark===''?'无':peopleInfoList.p_mark}}</p>
           </div>
-          <div class="p_number_right">
+          <div @click="editPeopleInfo()" class="p_number_right">
             <img src="../assets/images/edit.png" alt="">
             <p>修改</p>
           </div>
         </div>
         <div class="cart_number">
-          <P>购物车中合计6个菜</P>
-          <p>合计:<span class="price">￥58</span></p>
+          <P>购物车中合计{{totalNum}}个菜</P>
+          <p>合计:<span class="price">{{allPrice}}</span></p>
         </div>
       </div>
       <!--菜单列表-->
@@ -61,11 +61,50 @@
       </div>
     </div>
     <!--导航相关-->
-    <NavFooter :cartNum="cartNum"></NavFooter>
+
+    <!-- 导航点击显示 -->
+    <div id="footer_nav" @click="flag=!flag">
+      <img src="../assets/images/navigation.png" alt="">
+      <p>导航</p>
+    </div>
+    <div class="footer_nav_show" v-if="flag">
+      <ul class="list">
+        <router-link to="/start" tag="li">
+          <img src="../assets/images/menu.png" alt="">
+          <p>菜单</p>
+        </router-link>
+        <router-link to="/cart" tag="li">
+          <img src="../assets/images/cart.png" alt="">
+          <p>购物车</p>
+        </router-link>
+        <router-link to="/order" tag="li">
+          <img src="../assets/images/wallet.png" alt="">
+          <p>我的订单</p>
+        </router-link>
+        <router-link to="/orderpay" tag="li">
+          <img src="../assets/images/wallet.png" alt="">
+          <p>结账</p>
+        </router-link>
+        <li @click="flag=!flag">
+          <img src="../assets/images/close.png" alt="">
+          <p>返回</p>
+        </li>
+      </ul>
+    </div>
+
+    <router-link to="/cart">
+      <div id="footer_cart">
+        <img src="../assets/images/doorder.png" alt="">
+        <p>下单</p>
+      </div>
+
+    </router-link>
 
     <div class=" footer_book">
-      <img src="../assets/images/menu.png" alt="">
-      <p>菜单</p>
+      <router-link to="/home">
+        <img src="../assets/images/menu.png" alt="">
+        <p>菜单</p>
+      </router-link>
     </div>
 
 
@@ -73,23 +112,48 @@
 </template>
 
 <script>
-  import NavFooter from '../components/public/NavFooter.vue';
   import Config from '../assets/model/config.js';
+
   export default {
     name: "Cart",
     data() {
       return {
         api: Config.api,
-        list: []
+        list: [],
+        peopleInfoList: '',
+        flag: false,
 
       }
     },
-    props:['cartNum'],
-    components: {
-      NavFooter
+    components: {},
+    computed: {
+      allPrice: {
+        get: function () {
+          let totalPrice = 0;
+          this.list.map(v => {
+            totalPrice += v.num * v.price
+          })
+          return totalPrice;
+        },
+        set: function () {
+
+        }
+      },
+      totalNum() {
+        let total = 0;
+        this.list.map(v => {
+          total = total + parseInt(v.num);
+        })
+        return total;
+      }
+      /* allPrice() {
+         return this.list.reduce((allNum, item) => {
+           allNum += item.num * item.price
+         })
+       }*/
     },
     methods: {
-
+      // 获取数据
       async getCartData() {
         try {
           // 二维码
@@ -97,55 +161,79 @@
           let res = await this.$http.get(api)
           this.list = res.data.result;
           console.log(res)
-        }catch (e) {
+        } catch (e) {
           console.log(e);
         }
 
       },
-      async IncCartNum(item,key) {
+      // 增加
+      async IncCartNum(item, key) {
         try {
           // let res = await this.$http.get(api)
           // this.list = res.data.result;
           let product_id = item.product_id;
           ++item.num;
-          let num =  item.num;
+          let num = item.num;
 
 
-          let api = this.api + 'api/decCart?uid=a001&product_id='+product_id+'&num='+num;
+          let api = this.api + 'api/decCart?uid=a001&product_id=' + product_id + '&num=' + num;
           let res = await this.$http.get(api);
-          console.log(res);
+          console.log('增加', this.list);
 
-        }catch (e) {
+
+        } catch (e) {
           console.log(e);
         }
 
       },
-      async DecCartNum(item,key) {
+      // 减少
+      async DecCartNum(item, key) {
         try {
 
           // let res = await this.$http.get(api)
           // this.list = res.data.result;
           let product_id = item.product_id;
-          if(item.num==1){
+          if (item.num == 1) {
             // 删除当前这条数据
-            console.log(item,key);
-            this.list.splice(key,1);
-          }else {
+            console.log(item, key);
+            this.list.splice(key, 1);
+          } else {
             --item.num;
           }
-          let num =  item.num;
-          let api = this.api + 'api/incCart?uid=a001&product_id='+product_id+'&num='+num;
+          let num = item.num;
+          let api = this.api + 'api/incCart?uid=a001&product_id=' + product_id + '&num=' + num;
           let res = await this.$http.get(api);
-          console.log(res);
+          console.log('减少', this.list);
 
-        }catch (e) {
+        } catch (e) {
           console.log(e);
         }
 
+      },
+      // 获取用户点餐信息
+      async getPeopeleInfoList() {
+        try {
+          let api = this.api + 'api/peopleinfolist?uid=a001';
+          let res = await this.$http.get(api);
+          this.peopleInfoList = res.data.result[0];
+          console.log(this.peopleInfoList,2222)
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      editPeopleInfo() {
+        this.$router.push({
+          name: 'editpeopleinfo', params: {
+            p_id: this.peopleInfoList.uid,
+            p_num: this.peopleInfoList.p_num,
+            p_mark: this.peopleInfoList.p_mark
+          }
+        });
       }
     },
     mounted() {
-      this.getCartData()
+      this.getCartData();
+      this.getPeopeleInfoList();
     },
     created() {
 
@@ -327,6 +415,137 @@
       }
     }
 
+  }
+
+  // 购物车点击
+  #footer_nav {
+    position: fixed;
+    bottom: .5rem;
+    left: .5rem;
+    color: #fff;
+    background: rgb(143, 138, 138);
+    width: 4rem;
+    height: 4rem;
+    text-align: center;
+    border-radius: 50%;
+    img {
+      width: 1.8rem;
+      height: 1.8rem;
+      margin-top: .4rem;
+    }
+  ;
+    p {
+      font-size: .8rem;
+      position: relative;
+      top: -0.3rem;
+    }
+  }
+
+  #footer_cart {
+    position: fixed;
+    bottom: .5rem;
+    right: .5rem;
+    color: #fff;
+    background: red;
+    width: 4rem;
+    height: 4rem;
+    text-align: center;
+    border-radius: 50%;
+    img {
+      width: 1.8rem;
+      height: 1.8rem;
+      margin-top: .4rem;
+    }
+    P {
+      font-size: .8rem;
+      top: -0.3rem;
+
+    }
+    .num {
+      position: absolute;
+      top: -.5rem;
+      right: .5rem;
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      color: white;
+      background: red;
+      border-radius: 50%;
+    }
+  }
+
+  .footer_nav_show {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.6); /*正常模式下无幕布遮罩*/
+    .list {
+      position: fixed;
+      bottom: -15rem;
+      left: -14.5rem;
+      width: 30rem;
+      height: 30rem;
+      // border: yellow 1px solid;
+      border-radius: 50%;
+      display: block;
+      box-sizing: border-box;
+      li {
+        position: absolute;
+        transition: all 1s;
+        // margin-top: 1rem;
+        background: #000;
+        text-align: center;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        color: #fff;
+        img {
+          width: 1.8rem;
+          height: 1.8rem;
+          margin-top: .5rem;
+        }
+        P {
+          position: relative;
+          font-size: .8rem;
+          top: -0.5rem;
+        }
+        // 每一个li
+        &:nth-child(1) {
+          top: 0;
+          left: 50%;
+          transform-origin: 0rem 15rem;
+        }
+        &:nth-child(2) {
+          top: 0;
+          left: 50%;
+          transform-origin: 0rem 15rem;
+          transform: rotate(22.5deg);
+
+        }
+        &:nth-child(3) {
+          top: 0;
+          left: 50%;
+          transform-origin: 0rem 15rem;
+          transform: rotate(45deg);
+        }
+        &:nth-child(4) {
+          top: 0;
+          left: 50%;
+          transform-origin: 0rem 15rem;
+          transform: rotate(70.5deg);
+
+        }
+        &:nth-child(5) {
+          top: 10.5rem;
+          left: 50%;
+          transform-origin: 0rem 15rem;
+          //transform: rotate(70.5deg);
+        }
+
+      }
+    }
   }
 
   /*购物车空*/
