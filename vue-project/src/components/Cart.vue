@@ -1,7 +1,7 @@
 <template>
   <div id="cart">
     <div class="cart_content">
-      <div class="cart_info">
+      <div class="cart_info" v-if="totalNum>0">
         <h2>购物车</h2>
         <div class="p_number">
           <div class="p_number_left">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <!--菜单列表-->
-      <div class="cart_list">
+      <div class="cart_list" v-if="totalNum>0">
         <ul v-for="(item,key) in list" :key="key">
           <li class="item">
             <div class="left_food">
@@ -59,6 +59,7 @@
           </ul>
         </div>
       </div>
+      <div class="totalNumNull" v-if="totalNum<=0"><h3>购物车空空的，点击下方菜单点餐</h3></div>
     </div>
     <!--导航相关-->
 
@@ -216,7 +217,7 @@
           let api = this.api + 'api/peopleinfolist?uid=a001';
           let res = await this.$http.get(api);
           this.peopleInfoList = res.data.result[0];
-          console.log(this.peopleInfoList,2222)
+          console.log(this.peopleInfoList, 2222)
         } catch (e) {
           console.log(e);
         }
@@ -546,10 +547,11 @@
 
       }
     }
+
   }
 
   /*购物车空*/
-  .cart_empty {
+  .totalNumNull {
     text-align: center;
     line-height: 3;
     h3 {

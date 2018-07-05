@@ -56,7 +56,8 @@
     },
   methods: {
       backCart(){
-        this.$route.push({name:'cart'});
+        // this.$router.push({name:'home'});
+        this.$router.go(-1);
       },
       addChangeEvent(i) {
 
@@ -82,14 +83,14 @@
         // 桌子号
         let api = this.api+'api/addPeopleInfo';
         try {
-          var res = await this.$http.post(api,{
+          let res = await this.$http.post(api,{
             uid: 'a001',
             p_num: this.num,
-            p_mark:this.inputStr==''?this.inputContent.join():this.inputStr
+            p_mark:this.inputStr===''?this.inputContent.join():this.inputStr
           });
           console.log(res);
           if(res.data.success){
-            this.$router.push({name:'home',params:{cartNumAdd:this.num}})
+            this.$router.push({name:'cart',params:{cartNumAdd:this.num}})
           }
         }catch (e) {
 
@@ -97,9 +98,9 @@
       },
     //  获取初始的修改传递过来的值，之后再回显
       getEditInfo(){
-        var desk_num = this.$route.params.p_num;
-        var desk_mark = this.$route.params.p_mark;
-        var desk_id =  this.$route.params.p_id;
+        let desk_num = this.$route.params.p_num;
+        let desk_mark = this.$route.params.p_mark;
+        let desk_id =  this.$route.params.p_id;
         this.addChangeEvent(Number(desk_num));
         this.inputStr = desk_mark;
       }
