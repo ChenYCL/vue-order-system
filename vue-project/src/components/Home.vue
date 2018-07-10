@@ -60,10 +60,15 @@
     name: "Home",
     created() {
       this.getCartCount();
-
       this.getData();
     },
-
+    // 添加购物车   请求一次
+    sockets:{
+      addcart:function (data) { // 接收服务器广播的消息
+        console.log('接收服务器广播过来的消息',data);
+        this.getCartCount();
+      }
+    },
     data() {
       return {
         list: null,
@@ -75,7 +80,6 @@
       NavFooter
     },
     beforeMount() {
-      console.log(this.list);
     },
     methods: {
       asideDom() {

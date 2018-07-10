@@ -126,6 +126,12 @@
 
       }
     },
+    sockets:{
+      // 重新更新购物车的数量
+      addcart:function () { // 当有人的时候 重新更新购物车的数据
+        this.getCartData();
+      }
+    },
     components: {},
     computed: {
       allPrice: {

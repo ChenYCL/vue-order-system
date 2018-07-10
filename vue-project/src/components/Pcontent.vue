@@ -83,7 +83,11 @@
             img_url: this.list.img_url,
             product_id: this.list._id
           });
-          if(res.body.success){
+          if(res.data.success){
+            console.log('加入购物车触发');
+
+            // 加入购物车的时候  给服务器发送socket广播，服务器接收到会分组广播到客户端
+            this.$socket.emit('addcart','addcart');
             this.$router.push({name:'home',params:{cartNumAdd:this.num}})
           }
         }catch (e) {
