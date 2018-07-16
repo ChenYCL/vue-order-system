@@ -21,7 +21,8 @@
         <input type="text" placeholder="请选择口味" ref="userNeeds" v-model="inputStr">
         <div class="tag">
           <ul>
-            <li v-for="(item,key) in inputContent" class="item" v-if="inputContent.length>0">{{item}}<i @click="removeUserWant(key)">x</i></li>
+            <li v-for="(item,key) in inputContent" class="item" v-if="inputContent.length>0">{{item}}<i
+              @click="removeUserWant(key)">x</i></li>
           </ul>
         </div>
       </div>
@@ -36,17 +37,22 @@
 
 <script>
   import Config from '../assets/model/config.js';
+  import storage from '../assets/model/storage.js';
+
   export default {
     name: "Start",
     data() {
       return {
         activeIndex: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         markListDefault: ['打包带走', '不要辣椒', '微辣'],
-        inputContent:[],
-        inputStr:'',
-        api:Config.api,
-        num:''
+        inputContent: [],
+        inputStr: '',
+        api: Config.api,
+        num: ''
       }
+    },
+    created() {
+      this.getPeopeleInfoList();
     },
     methods: {
       addChangeEvent(i) {
@@ -58,34 +64,48 @@
         this.num = i;
       },
       addNeeds(name) {
-        if(this.inputContent.includes(name)) return;
+        if (this.inputContent.includes(name)) return;
         this.inputContent.push(name);
-        this.$refs.userNeeds.setAttribute('placeholder','')
+        this.$refs.userNeeds.setAttribute('placeholder', '')
       },
-      removeUserWant(id){
-        this.inputContent.splice(id,1);
+      removeUserWant(id) {
+        this.inputContent.splice(id, 1);
       },
       // 提交人数
-      async sendDesk(){
+      async sendDesk() {
         // 桌子号
-        let api = this.api+'api/addPeopleInfo';
+        let api = this.api + 'api/addPeopleInfo';
         try {
-          var res = await this.$http.post(api,{
-            uid: 'a001',
+          var res = await this.$http.post(api, {
+            uid: storage.get('roomid'),
             p_num: this.num,
-            p_mark:this.inputStr==''?this.inputContent.join():this.inputStr
+            p_mark: this.inputStr == '' ? this.inputContent.join() : this.inputStr
           });
           console.log(res);
-          if(res.data.success){
-            this.$router.push({name:'home',params:{cartNumAdd:this.num}})
+          if (res.data.success) {
+            this.$router.push({name: 'home', params: {cartNumAdd: this.num}})
           }
-        }catch (e) {
+        } catch (e) {
 
         }
+      },
+      // 获取用户点餐信息
+      async getPeopeleInfoList() {
+        try {
+          let api = this.api + 'api/peopleinfolist?uid=' + storage.get('roomid');
+          let res = await this.$http.get(api);
+          this.peopleInfoList = res.data.result[0]; // 无内容时，this.peopleInfoList 为undefined
+          if(this.editPeopleInfo){
+            // 则有数据内容
+            this.$route.push({name:'home'})
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
-
     },
     mounted() {
+
     }
   }
 </script>
@@ -172,13 +192,13 @@
     box-sizing: border-box;
     border-radius: 1rem;
     position: relative;
-    .tag{
+    .tag {
       position: absolute;
-      top:0;
+      top: 0;
       left: 0;
       margin-left: 2rem;
       margin-top: 2.5rem;
-      li{
+      li {
         display: inline-block;
         border-radius: .5rem;
         border: 1px solid red;
@@ -206,7 +226,7 @@
       border: 1px solid cadetblue;
       border-radius: 1rem;
       margin: 0 .5rem;
-      i{
+      i {
         color: green;
       }
     }

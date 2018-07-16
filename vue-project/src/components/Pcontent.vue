@@ -51,7 +51,7 @@
 
 <script>
   import Config from '../assets/model/config.js';
-
+  import  storage from '../assets/model/storage.js';
   export default {
     name: "Pcontent",
     data(){
@@ -76,7 +76,7 @@
         let api = this.api+'api/addcart';
         try {
           var res = await this.$http.post(api,{
-            uid: 'a001',
+            uid: storage.get('roomid'),
             title: this.list.title,
             price: this.list.price,
             num: this.num,

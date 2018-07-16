@@ -73,7 +73,6 @@
 </script>
 
 <style scoped lang="scss">
-  @charset "UTF-8";
   .order_content {
     padding: 1rem;
 

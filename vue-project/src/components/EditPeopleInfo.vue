@@ -13,8 +13,6 @@
         </ul>
       </div>
 
-
-
       <div class="confirm" @click.prevent.stop="sendDesk()">
         <span>确定修改</span>
       </div>
@@ -42,6 +40,7 @@
 
 <script>
   import Config from '../assets/model/config.js';
+  import storage from '../assets/model/storage.js';
   export default {
     name: "Start",
     data() {
@@ -84,7 +83,7 @@
         let api = this.api+'api/addPeopleInfo';
         try {
           let res = await this.$http.post(api,{
-            uid: 'a001',
+            uid: storage.get('roomid'),
             p_num: this.num,
             p_mark:this.inputStr===''?this.inputContent.join():this.inputStr
           });

@@ -114,6 +114,7 @@
 
 <script>
   import Config from '../assets/model/config.js';
+  import  storage from '../assets/model/storage.js';
 
   export default {
     name: "Cart",
@@ -164,10 +165,10 @@
       async getCartData() {
         try {
           // 二维码
-          let api = this.api + 'api/cartlist?uid=a001';
+          let api = this.api + 'api/cartlist?uid='+storage.get('roomid');
           let res = await this.$http.get(api)
           this.list = res.data.result;
-          console.log(res)
+          console.log(res,'当前得到的数据');
         } catch (e) {
           console.log(e);
         }
@@ -181,13 +182,11 @@
           let product_id = item.product_id;
           ++item.num;
           let num = item.num;
-
-
-          let api = this.api + 'api/decCart?uid=a001&product_id=' + product_id + '&num=' + num;
+          let api = this.api + 'api/decCart?uid='+storage.get('roomid')+'&product_id=' + product_id + '&num=' + num;
           let res = await this.$http.get(api);
-          console.log('增加', this.list);
-
-
+          if(res.data.success){
+            this.$socket.emit('addcart','addcart');
+          }
         } catch (e) {
           console.log(e);
         }
@@ -208,9 +207,11 @@
             --item.num;
           }
           let num = item.num;
-          let api = this.api + 'api/incCart?uid=a001&product_id=' + product_id + '&num=' + num;
+          let api = this.api + 'api/incCart?uid='+storage.get('roomid')+'&product_id=' + product_id + '&num=' + num;
           let res = await this.$http.get(api);
-          console.log('减少', this.list);
+          if(res.data.success){
+            this.$socket.emit('addcart','addcart');
+          }
 
         } catch (e) {
           console.log(e);
@@ -220,7 +221,7 @@
       // 获取用户点餐信息
       async getPeopeleInfoList() {
         try {
-          let api = this.api + 'api/peopleinfolist?uid=a001';
+          let api = this.api + 'api/peopleinfolist?uid='+storage.get('roomid');
           let res = await this.$http.get(api);
           this.peopleInfoList = res.data.result[0];
           console.log(this.peopleInfoList, 2222)

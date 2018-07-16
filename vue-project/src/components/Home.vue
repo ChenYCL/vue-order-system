@@ -55,6 +55,7 @@
 <script>
   import NavFooter from '../components/public/NavFooter.vue';
   import Config from '../assets/model/config.js';
+  import storage from "../assets/model/storage";
 
   export default {
     name: "Home",
@@ -99,10 +100,9 @@
       },
       async getCartCount(id) {
         try {
-          const response = await this.$http.get(`${this.api}api/cartCount?uid=a001`);
+          const response = await this.$http.get(`${this.api}api/cartCount?uid=${storage.get('roomid')}`);
           let list = response.data.result;
           this.cartNum = list;
-          console.log(this.cartNum);
         } catch (error) {
           console.error(error);
         }
@@ -134,6 +134,7 @@
       // this.$on('update:cartNum',(msg)=>{
       //   console.log(msg);
       // })
+      console.log(this.$route.params['cartNumAdd']);
       if(this.$route.params['cartNumAdd']){
         this.cartNum += this.$route.params.cartNumAdd;
       }

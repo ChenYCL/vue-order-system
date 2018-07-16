@@ -1,12 +1,23 @@
 import Vue from 'vue'
 import App from './App.vue'
-
-
+import storage from './assets/model/storage.js'
 import VueRouter from 'vue-router';
 import axios from 'axios';
+
+
+// 获取从二维码扫描的桌子号码
+
+if(!localStorage.getItem('roomid')){
+  var roomid = window.location.hash.split('=')[1];
+  storage.set('roomid',roomid);
+}
+
+
 // socket.io接收
 import VueSocketio from 'vue-socket.io';
-Vue.use(VueSocketio,'http://a.itying.com'); // 使用vue-socket.io
+Vue.use(VueSocketio,'http://a.itying.com?roomid='+storage.get('roomid')); // 使用vue-socket.io
+
+
 
 Vue.prototype.$http = axios;
 
